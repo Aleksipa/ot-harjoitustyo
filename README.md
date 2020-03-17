@@ -1,8 +1,10 @@
-# First heading
+# Ohjelmistotekniikka, harjoitustyö
 
-Here’s an overview of Markdown syntax that you can use anywhere on GitHub.com or in your own text files.
+## Tehtävät
+
+### Viikko 1
+
+[gitlog.txt](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
 
-This is very  **bold**
-
-And this is *italic*
+[komentorivi.txt](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
