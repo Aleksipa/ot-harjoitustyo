@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package pomodoroapp;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -20,19 +20,19 @@ public class pomodoroappTest {
     public pomodoroappTest() {
     }
     
-    @BeforeAll
+    //@BeforeAll
     public static void setUpClass() {
     }
     
-    @AfterAll
+    //@AfterAll
     public static void tearDownClass() {
     }
     
-    @BeforeEach
+    //@BeforeEach
     public void setUp() {
     }
     
-    @AfterEach
+    //@AfterEach
     public void tearDown() {
     }
 

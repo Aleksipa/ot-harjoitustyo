@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pomodoroapp;
+package pomodoroapp.domain;
 
-import pomodoroapp.ui.PomodoroUi;
 /**
  *
  * @author aleksipaavola
  */
-public class Main {
-    public static void main(String[] args) {
-        PomodoroUi.main(args);
-    }
+public class Pomodoro {
     
 }
