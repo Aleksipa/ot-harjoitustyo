@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pomodoroapp;
+package pomodoroapp.domain;
 
 import org.junit.After;
 import org.junit.Before;
@@ -39,6 +39,19 @@ public class pomodoroappTest {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-    // @Test
-    // public void hello() {}
+   
+  
+    @Test
+    public void notEqualWhenDifferentId() {
+        Pomodoro p1 = new Pomodoro(1, null, null, null);
+        Pomodoro p2 = new Pomodoro(1, null, null, null);
+        assertFalse(p1.equals(p2));
+    }   
+    
+    @Test
+    public void nonEqualWhenDifferentType() {
+        Pomodoro p = new Pomodoro(1, null, null, null);
+        Object o = new Object();
+        assertFalse(p.equals(o));
+    }      
 }
