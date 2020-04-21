@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+pomodoroApp,pomodoroapp.dao,FilePomodoroDao,65,0,2,0,15,0,4,0,3,0
+pomodoroApp,pomodoroapp.dao,FileUserDao,11,110,0,4,3,25,0,8,0,6
+pomodoroApp,pomodoroapp,Main,6,0,0,0,3,0,2,0,2,0
+pomodoroApp,pomodoroapp.domain,User,0,29,0,2,0,10,0,5,0,4
+pomodoroApp,pomodoroapp.domain,PomodoroService,68,51,2,4,22,18,4,7,3,5
+pomodoroApp,pomodoroapp.domain,Pomodoro,28,15,0,0,12,6,8,1,8,1

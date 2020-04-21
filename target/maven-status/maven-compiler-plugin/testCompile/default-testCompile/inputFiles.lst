@@ -1,1 +1,8 @@
-/Users/aleksipaavola/Documents/ot-harjoitustyo/pomodoroApp/src/test/java/pomodoroapp/domain/pomodoroappTest.java
+/Users/aleksipaavola/Documents/ot-harjoitustyo/src/test/java/pomodoroapp/domain/PomodoroServicePomodoroTest.java
+/Users/aleksipaavola/Documents/ot-harjoitustyo/src/test/java/pomodoroapp/domain/FakeUserDao.java
+/Users/aleksipaavola/Documents/ot-harjoitustyo/src/test/java/pomodoroapp/domain/PomodoroTest.java
+/Users/aleksipaavola/Documents/ot-harjoitustyo/src/test/java/pomodoroapp/dao/FilePomodoroDaoTest.java
+/Users/aleksipaavola/Documents/ot-harjoitustyo/src/test/java/pomodoroapp/domain/FakePomodoroDao.java
+/Users/aleksipaavola/Documents/ot-harjoitustyo/src/test/java/pomodoroapp/domain/UserTest.java
+/Users/aleksipaavola/Documents/ot-harjoitustyo/src/test/java/pomodoroapp/dao/FileUserDaoTest.java
+/Users/aleksipaavola/Documents/ot-harjoitustyo/src/test/java/pomodoroapp/domain/PomodoroServiceUserTest.java

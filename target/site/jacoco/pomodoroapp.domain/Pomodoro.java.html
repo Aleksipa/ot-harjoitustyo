@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pomodoro.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pomodoroApp</a> &gt; <a href="index.source.html" class="el_package">pomodoroapp.domain</a> &gt; <span class="el_source">Pomodoro.java</span></div><h1>Pomodoro.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pomodoroapp.domain;
+
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.scene.control.Label;
+
+
+
+/**
+ *
+ * @author aleksipaavola
+ */
+public class Pomodoro {
+    
+    private Integer starttime;
+    private Timeline timeline;
+    private Label timerLabel;
+    private IntegerProperty timeSeconds;
+    
+<span class="fc" id="L25">    public Pomodoro(Integer starttime, Timeline timeline, Label timerLabel, IntegerProperty timeSeconds) {</span>
+<span class="fc" id="L26">        this.starttime = starttime;</span>
+<span class="fc" id="L27">        this.timeline = timeline;</span>
+<span class="fc" id="L28">        this.timerLabel = timerLabel;</span>
+<span class="fc" id="L29">        this.timeSeconds = timeSeconds;</span>
+<span class="fc" id="L30">    }</span>
+
+    /**
+     * @return the STARTTIME
+     */
+    public Integer getStarttime() {
+<span class="nc" id="L36">        return starttime;</span>
+    }
+
+    /**
+     * @param STARTTIME the STARTTIME to set
+     */
+    public void setStarttime(Integer starttime) {
+<span class="nc" id="L43">        this.starttime = starttime;</span>
+<span class="nc" id="L44">    }</span>
+
+    /**
+     * @return the timeline
+     */
+    public Timeline getTimeline() {
+<span class="nc" id="L50">        return timeline;</span>
+    }
+
+    /**
+     * @param timeline the timeline to set
+     */
+    public void setTimeline(Timeline timeline) {
+<span class="nc" id="L57">        this.timeline = timeline;</span>
+<span class="nc" id="L58">    }</span>
+
+    /**
+     * @return the timerLabel
+     */
+    public Label getTimerLabel() {
+<span class="nc" id="L64">        return timerLabel;</span>
+    }
+
+    /**
+     * @param timerLabel the timerLabel to set
+     */
+    public void setTimerLabel(Label timerLabel) {
+<span class="nc" id="L71">        this.timerLabel = timerLabel;</span>
+<span class="nc" id="L72">    }</span>
+
+    /**
+     * @return the timeSeconds
+     */
+    public IntegerProperty getTimeSeconds() {
+<span class="nc" id="L78">        return timeSeconds;</span>
+    }
+
+    /**
+     * @param timeSeconds the timeSeconds to set
+     */
+    public void setTimeSeconds(IntegerProperty timeSeconds) {
+<span class="nc" id="L85">        this.timeSeconds = timeSeconds;</span>
+<span class="nc" id="L86">    }</span>
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

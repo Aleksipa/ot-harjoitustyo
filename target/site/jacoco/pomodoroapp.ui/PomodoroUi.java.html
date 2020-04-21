@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PomodoroUi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pomodoroApp</a> &gt; <a href="index.source.html" class="el_package">pomodoroapp.ui</a> &gt; <span class="el_source">PomodoroUi.java</span></div><h1>PomodoroUi.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pomodoroapp.ui;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+import javafx.animation.Timeline;
+import pomodoroapp.domain.PomodoroService;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import pomodoroapp.dao.FilePomodoroDao;
+import pomodoroapp.dao.FileUserDao;
+
+/**
+ *
+ * @author aleksipaavola
+ */
+<span class="nc" id="L38">public class PomodoroUi extends Application {</span>
+    
+    private PomodoroService pomodoroService;
+    
+    private Scene pomodoroScene;
+    private Scene newUserScene;
+    private Scene loginScene;
+    
+    private VBox pomodoroNodes;
+<span class="nc" id="L47">    private Label menuLabel = new Label();</span>
+    
+    @Override
+    public void init() throws Exception {
+        
+<span class="nc" id="L52">        Properties properties = new Properties();</span>
+
+<span class="nc" id="L54">        properties.load(new FileInputStream(&quot;config.properties&quot;));</span>
+        
+<span class="nc" id="L56">        String userFile = properties.getProperty(&quot;userFile&quot;);</span>
+<span class="nc" id="L57">        String pomodoroFile = properties.getProperty(&quot;todoFile&quot;);</span>
+            
+<span class="nc" id="L59">        FileUserDao userDao = new FileUserDao(userFile);</span>
+<span class="nc" id="L60">        FilePomodoroDao pomodoroDao = new FilePomodoroDao(pomodoroFile, userDao);</span>
+<span class="nc" id="L61">        pomodoroService = new PomodoroService(pomodoroDao, userDao);</span>
+<span class="nc" id="L62">    }</span>
+    
+    @Override
+    public void start(Stage primaryStage) {
+        // login scene
+        
+<span class="nc" id="L68">        VBox loginPane = new VBox(10);</span>
+<span class="nc" id="L69">        HBox inputPane = new HBox(10);</span>
+<span class="nc" id="L70">        loginPane.setPadding(new Insets(10));</span>
+<span class="nc" id="L71">        Label loginLabel = new Label(&quot;username&quot;);</span>
+<span class="nc" id="L72">        TextField usernameInput = new TextField();</span>
+        
+<span class="nc" id="L74">        inputPane.getChildren().addAll(loginLabel, usernameInput);</span>
+<span class="nc" id="L75">        Label loginMessage = new Label();</span>
+        
+<span class="nc" id="L77">        Button loginButton = new Button(&quot;login&quot;);</span>
+<span class="nc" id="L78">        Button createButton = new Button(&quot;create new user&quot;);</span>
+<span class="nc" id="L79">        loginButton.setOnAction(e-&gt;{</span>
+<span class="nc" id="L80">            String username = usernameInput.getText();</span>
+<span class="nc" id="L81">            menuLabel.setText(username + &quot; logged in...&quot;);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            if ( pomodoroService.login(username) ){</span>
+<span class="nc" id="L83">                loginMessage.setText(&quot;&quot;);</span>
+<span class="nc" id="L84">                primaryStage.setScene(pomodoroScene);  </span>
+<span class="nc" id="L85">                usernameInput.setText(&quot;&quot;);</span>
+            } else {
+<span class="nc" id="L87">                loginMessage.setText(&quot;use does not exist&quot;);</span>
+<span class="nc" id="L88">                loginMessage.setTextFill(Color.RED);</span>
+            }      
+<span class="nc" id="L90">        });  </span>
+        
+<span class="nc" id="L92">        createButton.setOnAction(e-&gt;{</span>
+<span class="nc" id="L93">            usernameInput.setText(&quot;&quot;);</span>
+<span class="nc" id="L94">            primaryStage.setScene(newUserScene);   </span>
+<span class="nc" id="L95">        });  </span>
+        
+<span class="nc" id="L97">        loginPane.getChildren().addAll(loginMessage, inputPane, loginButton, createButton);       </span>
+        
+<span class="nc" id="L99">        loginScene = new Scene(loginPane, 300, 250);    </span>
+   
+        // new createNewUserScene
+        
+<span class="nc" id="L103">        VBox newUserPane = new VBox(10);</span>
+        
+<span class="nc" id="L105">        HBox newUsernamePane = new HBox(10);</span>
+<span class="nc" id="L106">        newUsernamePane.setPadding(new Insets(10));</span>
+<span class="nc" id="L107">        TextField newUsernameInput = new TextField(); </span>
+<span class="nc" id="L108">        Label newUsernameLabel = new Label(&quot;username&quot;);</span>
+<span class="nc" id="L109">        newUsernameLabel.setPrefWidth(100);</span>
+<span class="nc" id="L110">        newUsernamePane.getChildren().addAll(newUsernameLabel, newUsernameInput);</span>
+     
+<span class="nc" id="L112">        HBox newNamePane = new HBox(10);</span>
+<span class="nc" id="L113">        newNamePane.setPadding(new Insets(10));</span>
+<span class="nc" id="L114">        TextField newNameInput = new TextField();</span>
+<span class="nc" id="L115">        Label newNameLabel = new Label(&quot;name&quot;);</span>
+<span class="nc" id="L116">        newNameLabel.setPrefWidth(100);</span>
+<span class="nc" id="L117">        newNamePane.getChildren().addAll(newNameLabel, newNameInput);        </span>
+        
+<span class="nc" id="L119">        Label userCreationMessage = new Label();</span>
+        
+<span class="nc" id="L121">        Button createNewUserButton = new Button(&quot;create&quot;);</span>
+<span class="nc" id="L122">        createNewUserButton.setPadding(new Insets(10));</span>
+
+<span class="nc" id="L124">        createNewUserButton.setOnAction(e-&gt;{</span>
+<span class="nc" id="L125">            String username = newUsernameInput.getText();</span>
+<span class="nc" id="L126">            String name = newNameInput.getText();</span>
+   
+<span class="nc bnc" id="L128" title="All 4 branches missed.">            if ( username.length()==2 || name.length()&lt;2 ) {</span>
+<span class="nc" id="L129">                userCreationMessage.setText(&quot;username or name too short&quot;);</span>
+<span class="nc" id="L130">                userCreationMessage.setTextFill(Color.RED);              </span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            } else if ( pomodoroService.createUser(username, name) ){</span>
+<span class="nc" id="L132">                userCreationMessage.setText(&quot;&quot;);                </span>
+<span class="nc" id="L133">                loginMessage.setText(&quot;new user created&quot;);</span>
+<span class="nc" id="L134">                loginMessage.setTextFill(Color.GREEN);</span>
+<span class="nc" id="L135">                primaryStage.setScene(loginScene);      </span>
+            } else {
+<span class="nc" id="L137">                userCreationMessage.setText(&quot;username has to be unique&quot;);</span>
+<span class="nc" id="L138">                userCreationMessage.setTextFill(Color.RED);        </span>
+            }
+ 
+<span class="nc" id="L141">        });  </span>
+        
+<span class="nc" id="L143">        newUserPane.getChildren().addAll(userCreationMessage, newUsernamePane, newNamePane, createNewUserButton); </span>
+       
+<span class="nc" id="L145">        newUserScene = new Scene(newUserPane, 300, 250);</span>
+        
+        // main scene
+               
+<span class="nc" id="L149">        BorderPane mainPane = new BorderPane();</span>
+<span class="nc" id="L150">        pomodoroScene = new Scene(mainPane, 300, 250);</span>
+        
+<span class="nc" id="L152">        HBox menuPane = new HBox(10);    </span>
+<span class="nc" id="L153">        Region menuSpacer = new Region();</span>
+<span class="nc" id="L154">        HBox.setHgrow(menuSpacer, Priority.ALWAYS);</span>
+<span class="nc" id="L155">        Button logoutButton = new Button(&quot;logout&quot;);      </span>
+<span class="nc" id="L156">        menuPane.getChildren().addAll(menuLabel, menuSpacer, logoutButton);</span>
+<span class="nc" id="L157">        logoutButton.setOnAction(e-&gt;{</span>
+<span class="nc" id="L158">            pomodoroService.logout();</span>
+<span class="nc" id="L159">            primaryStage.setScene(loginScene);</span>
+<span class="nc" id="L160">        });  </span>
+        
+<span class="nc" id="L162">        Integer STARTTIME = 15;</span>
+<span class="nc" id="L163">        Timeline timeline = new Timeline();</span>
+<span class="nc" id="L164">        Label timerLabel = new Label();</span>
+<span class="nc" id="L165">        IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);</span>
+        
+        
+<span class="nc" id="L168">        Button startButton = new Button(&quot;Start timer&quot;);</span>
+<span class="nc" id="L169">        startButton.setOnAction(e-&gt; {</span>
+<span class="nc" id="L170">          pomodoroService.createPomodoro(STARTTIME,timeline, timerLabel, timeSeconds);</span>
+<span class="nc" id="L171">        });</span>
+       
+        
+<span class="nc" id="L174">        HBox createForm = new HBox(10);   </span>
+<span class="nc" id="L175">        Region spacer = new Region();</span>
+<span class="nc" id="L176">        HBox.setHgrow(spacer, Priority.ALWAYS);</span>
+<span class="nc" id="L177">        createForm.getChildren().addAll(spacer, timerLabel, startButton);</span>
+        
+<span class="nc" id="L179">        timerLabel.textProperty().bind(timeSeconds.asString());</span>
+<span class="nc" id="L180">        timerLabel.setTextFill(Color.RED);</span>
+<span class="nc" id="L181">        timerLabel.setStyle(&quot;-fx-font-size: 4em;&quot;);</span>
+
+<span class="nc" id="L183">        pomodoroNodes = new VBox(10);</span>
+<span class="nc" id="L184">        pomodoroNodes.setMaxWidth(280);</span>
+<span class="nc" id="L185">        pomodoroNodes.setMinWidth(280);</span>
+        
+<span class="nc" id="L187">        mainPane.setBottom(createForm);</span>
+<span class="nc" id="L188">        mainPane.setTop(menuPane);</span>
+<span class="nc" id="L189">        mainPane.setCenter(timerLabel);</span>
+       
+<span class="nc" id="L191">        primaryStage.setTitle(&quot;Pomodoro App&quot;);</span>
+<span class="nc" id="L192">        primaryStage.setScene(loginScene);</span>
+<span class="nc" id="L193">        primaryStage.show();</span>
+<span class="nc" id="L194">        primaryStage.setOnCloseRequest(e-&gt;{</span>
+<span class="nc" id="L195">            System.out.println(&quot;closing&quot;);</span>
+<span class="nc" id="L196">            System.out.println(pomodoroService.getLoggedUser());</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">            if (pomodoroService.getLoggedUser()!=null) {</span>
+<span class="nc" id="L198">                e.consume();   </span>
+            }
+            
+<span class="nc" id="L201">        });</span>
+<span class="nc" id="L202">    }</span>
+    @Override
+    public void stop() {
+<span class="nc" id="L205">      System.out.println(&quot;App is closing&quot;);</span>
+<span class="nc" id="L206">    }  </span>
+    
+    public static void main(String[] args) {
+<span class="nc" id="L209">        launch(args);</span>
+<span class="nc" id="L210">    }</span>
+
+}
+   
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

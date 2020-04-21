@@ -51,7 +51,7 @@ public class PomodoroUi extends Application {
         
         Properties properties = new Properties();
 
-        properties.load(new FileInputStream("/Users/aleksipaavola/Documents/ot-harjoitustyo/config.properties"));
+        properties.load(new FileInputStream("config.properties"));
         
         String userFile = properties.getProperty("userFile");
         String pomodoroFile = properties.getProperty("todoFile");
