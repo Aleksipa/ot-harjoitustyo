@@ -8,3 +8,5 @@ Sovelluksen avulla käyttäjien on mahdollista jaksottaa omaa työskentelyään 
 
 
 [työaikakirjanpito](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+
+[Arkkitehtuurikuvaus](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
