@@ -1,6 +1,6 @@
 target
-todos.txt 
-users.txt
+todo.txt 
+user.txt
 .classpath
 .project
 .settings/
@@ -9,3 +9,4 @@ target
 nbactions.xml
 pomodoroapp.jar
 nbproject
+.DS_Store
