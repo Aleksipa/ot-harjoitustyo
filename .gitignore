@@ -1,2 +1,10 @@
-pomodoroApp/target
-/pomodoroApp/nbproject/
+target
+todos.txt 
+users.txt
+.classpath
+.project
+.settings/
+/nbproject/
+target
+nbactions.xml
+pomodoroapp.jar
