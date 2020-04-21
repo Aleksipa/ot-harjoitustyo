@@ -54,7 +54,7 @@ public class PomodoroUi extends Application {
         properties.load(new FileInputStream("config.properties"));
         
         String userFile = properties.getProperty("userFile");
-        String pomodoroFile = properties.getProperty("todoFile");
+        String pomodoroFile = properties.getProperty("doneFile");
             
         FileUserDao userDao = new FileUserDao(userFile);
         FilePomodoroDao pomodoroDao = new FilePomodoroDao(pomodoroFile, userDao);
