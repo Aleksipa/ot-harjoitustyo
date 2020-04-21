@@ -13,7 +13,7 @@ Sovelluksen avulla käyttäjien on mahdollista jaksottaa omaa työskentelyään 
 
 ## Releaset
 
-Linkki
+[Viikko 5](https://github.com/Aleksipa/ot-harjoitustyo/releases)
 
 ## Komentorivitoiminnot
 
