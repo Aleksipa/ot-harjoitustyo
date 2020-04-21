@@ -2,17 +2,17 @@
 
 ## Sovelluksen tarkoitus
 
-Sovelluksen avulla käyttäjien on mahdollista jaksottaa omaa työskentelyään haluamansa pituisiin jaksoihin ja seurata miten monta esim. 30 minuutin työskentelyjaksoa käyttäjä on suorittanut. Sovellusta on mahdollista käyttää useamman rekisteröityneen käyttäjän, joilla kaikilla on oma yksilöllinen suorituslistansa.
+Sovelluksen avulla käyttäjien on mahdollista jaksottaa omaa työskentelyään haluamansa pituisiin jaksoihin ja seurata miten monta esim. 30 minuutin työskentelyjaksoa käyttäjä on suorittanut. Sovellusta on mahdollista käyttää useamman rekisteröityneen käyttäjän, joilla kaikilla on oma yksilöllinen lista siitä miten monta työskentelyjaksoa kukin käyttäjä on suorittanut.
 
-## Käyttäjät
+## Käyttäjät / tehty
 
 Alkuvaiheessa sovelluksella on ainoastaan yksi käyttäjärooli eli normaali käyttäjä. Myöhemmin sovellukseen saatetaan lisätä suuremmilla oikeuksilla varustettu pääkäyttäjä.
 
 ## Perusversion tarjoama toiminnallisuus
 
-### Ennen kirjautumista
+### Ennen kirjautumista / tehty
 
-* käyttäjä voi luoda järjestelmään käyttäjätunnuksen. Käyttäjätunnuksen täytyy olla uniikki ja pituudeltaan vähintään 5 merkkiä.
+* käyttäjä voi luoda järjestelmään käyttäjätunnuksen. Käyttäjätunnuksen täytyy olla uniikki ja pituudeltaan vähintään 5 merkkiä. 
 
 * Käyttäjä voi kirjautua järjestelmään. Kirjautuminen onnistuu syötettäessä olemassaoleva käyttäjätunnus kirjautumislomakkeelle. Jos käyttäjää ei olemassa, ilmoittaa järjestelmä tästä.
 
@@ -20,11 +20,11 @@ Alkuvaiheessa sovelluksella on ainoastaan yksi käyttäjärooli eli normaali kä
 
 * Käyttäjä näkee suorittamansa työskentelyjaksot
 
-* Käyttäjä voi muokata yhden työskentelyjakson kestoa ja käynnistää ajastimen
+* Käyttäjä voi muokata yhden työskentelyjakson kestoa ja käynnistää ajastimen / osittain tehty
 
-* Käyttäjä voi käynnistää työskentelyjakson, jolloin ajastin käynnistyy ja näyttää miten paljon työskentelyjaksoa on jäljellä. Työskentelyjakson päätyttyä järjestelmä hälyttää, jolloin käyttäjä tietää työskentelyjakson päättyneen.
+* Käyttäjä voi käynnistää työskentelyjakson, jolloin ajastin käynnistyy ja näyttää miten paljon työskentelyjaksoa on jäljellä. Työskentelyjakson päätyttyä järjestelmä hälyttää, jolloin käyttäjä tietää työskentelyjakson päättyneen. / tehty
 
-* Käyttäjä voi kirjautua ulos järjestelmästä
+* Käyttäjä voi kirjautua ulos järjestelmästä / tehty
 
 ### Jatkokehitysideoita
 
