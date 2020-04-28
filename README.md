@@ -41,4 +41,10 @@ Komento
 mvn package
 ```
 
-generoi hakemistoon _target_ suoritettavan jar-tiedoston _OtmPomodoroApp-1.0-SNAPSHOT.jar_
+generoi hakemistoon _target_ suoritettavan jar-tiedoston pomodoroApp-1.0-SNAPSHOT.jar
+
+### Checkstyle
+
+Tiedostoon checkstyle.xml määritellyt tarkistukset suoritetaan komennolla
+
+mvn jxr:jxr checkstyle:checkstyle
