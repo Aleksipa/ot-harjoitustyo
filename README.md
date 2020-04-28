@@ -47,4 +47,6 @@ generoi hakemistoon _target_ suoritettavan jar-tiedoston pomodoroApp-1.0-SNAPSHO
 
 Tiedostoon checkstyle.xml määritellyt tarkistukset suoritetaan komennolla
 
+```
 mvn jxr:jxr checkstyle:checkstyle
+```
