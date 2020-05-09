@@ -14,7 +14,9 @@ import pomodoroapp.domain.Pomodoro;
 
 public interface PomodoroDao {
 
-    Pomodoro create(Pomodoro pomodoro) throws Exception;
+    Pomodoro createOrUpdate(Pomodoro pomodoro) throws Exception;
+    
+    List<Pomodoro> getAll();
 
 
 }

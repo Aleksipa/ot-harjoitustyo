@@ -17,8 +17,13 @@ import pomodoroapp.dao.PomodoroDao;
 public class FakePomodoroDao implements PomodoroDao{
     
     @Override
-    public Pomodoro create(Pomodoro pomodoro) {
+    public Pomodoro createOrUpdate(Pomodoro pomodoro) {
         return pomodoro;
+    }
+
+    @Override
+    public List<Pomodoro> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  
 

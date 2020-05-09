@@ -7,9 +7,8 @@ package pomodoroapp.domain;
 
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
-
-
 
 /**
  *
@@ -17,58 +16,50 @@ import javafx.scene.control.Label;
  */
 public class Pomodoro {
     
-    private Integer starttime;
-    private Timeline timeline;
-    private Label timerLabel;
-    private IntegerProperty timeSeconds;
+    private int id;
+    private int count;
+    private Integer startTime;
+    private IntegerProperty timeSeconds = new SimpleIntegerProperty(10);
+    private User user;
     
-    public Pomodoro(Integer starttime, Timeline timeline, Label timerLabel, IntegerProperty timeSeconds) {
-        this.starttime = starttime;
-        this.timeline = timeline;
-        this.timerLabel = timerLabel;
+    
+    public Pomodoro(int id, int count, Integer startTime, IntegerProperty timeSeconds, User user) {
+        this.id = id;
+        this.count = count;
+        this.startTime = startTime;
         this.timeSeconds = timeSeconds;
+        this.user = user;
+    }
+    
+    public Pomodoro(int count, User user) {
+        this.count = count;
+        this.user = user;
+    }
+    
+        public int getId() {
+        return id;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public User getUser() {
+        return user;
     }
 
     /**
-     * @return the STARTTIME
+     * @return the startTime
      */
-    public Integer getStarttime() {
-        return starttime;
+    public Integer getStartTime() {
+        return startTime;
     }
 
     /**
-     * @param STARTTIME the STARTTIME to set
+     * @param startTime the startTime to set
      */
-    public void setStarttime(Integer starttime) {
-        this.starttime = starttime;
-    }
-
-    /**
-     * @return the timeline
-     */
-    public Timeline getTimeline() {
-        return timeline;
-    }
-
-    /**
-     * @param timeline the timeline to set
-     */
-    public void setTimeline(Timeline timeline) {
-        this.timeline = timeline;
-    }
-
-    /**
-     * @return the timerLabel
-     */
-    public Label getTimerLabel() {
-        return timerLabel;
-    }
-
-    /**
-     * @param timerLabel the timerLabel to set
-     */
-    public void setTimerLabel(Label timerLabel) {
-        this.timerLabel = timerLabel;
+    public void setStartTime(Integer startTime) {
+        this.startTime = startTime;
     }
 
     /**
@@ -84,6 +75,30 @@ public class Pomodoro {
     public void setTimeSeconds(IntegerProperty timeSeconds) {
         this.timeSeconds = timeSeconds;
     }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * @return the count
+     */
+    public int getCount() {
+        return count;
+    }
+
+    /**
+     * @param countor the count to set
+     */
+    public void setCount(int count) {
+        this.count = count;
+    }
     
+    public void addCount() {
+        this.count ++;
+    }
     
 }

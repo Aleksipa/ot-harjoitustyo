@@ -5,19 +5,13 @@
  */
 package pomodoroapp.domain;
 
-import javafx.animation.Animation;
-import javafx.animation.Animation.Status;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
-import javafx.util.Duration;
-import static javafx.util.Duration.ZERO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import pomodoroapp.dao.PomodoroDao;
 import pomodoroapp.dao.UserDao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,6 +27,52 @@ public class PomodoroService {
         this.userDao = userDao;
         this.pomodoroDao = pomodoroDao;
     }
+    
+    /**
+    * Suoritetun pomodoron kirjaaminen kirjautuneena olevalle käyttäjälle
+    *
+    * @param   content   luotavan pomodoron sisältö
+    */
+    
+    public boolean completePomodoro(Pomodoro pomodoro) {
+        try {   
+            pomodoroDao.createOrUpdate(pomodoro);
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+    * kirjautuneen käyttäjän suorittamat pomodorot
+    * 
+    * @return kirjautuneen käyttäjän suorittamat pomodorot
+    */
+    
+    public int getPomodoroCount() {
+        if (loggedIn == null) {
+            return 0;
+        }
+          
+        List<Pomodoro> result = pomodoroDao.getAll()
+            .stream()
+            .filter(p-> p.getUser().equals(loggedIn))
+            .collect(Collectors.toList());
+        
+        if (result.isEmpty())
+            return 0;       
+        else
+            return result.get(0).getCount();
+            
+    }
+    
+    /**
+    * sisäänkirjautuminen
+    * 
+    * @param username käyttäjätunnus
+    * 
+    * @return true jos käyttäjätunnus on olemassa, muuten false 
+    */  
     
     public boolean login(String username) {
         User user = userDao.findByUsername(username);
@@ -74,42 +114,6 @@ public class PomodoroService {
     
     public User getLoggedUser() {
         return loggedIn;
-    }
-
-    
-    /**
-     *
-     * @param starttime
-     * @param timeline
-     * @param timerLabel
-     * @param timeSeconds
-     * @return
-     */
-    public boolean createPomodoro(Integer starttime, Timeline tl, Label timerLabel, IntegerProperty timeSeconds) {
-        try {   
-            if (tl != null) {
-                tl.stop();
-            }
-            timeSeconds.set(starttime);
-            tl = new Timeline();
-            tl.getKeyFrames().add(
-                    new KeyFrame(Duration.seconds(starttime + 1),
-                    new KeyValue(timeSeconds, 0)));   
-            tl.playFromStart();
-            tl.setOnFinished(e -> {
-                createAlert();
-            });
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-    
-    public void createAlert() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("It's time for a break");
-        alert.setContentText("You completed your pomodoro! It's time for a break.");
-        alert.show();
     }
 
 }

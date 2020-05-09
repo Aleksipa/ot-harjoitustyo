@@ -17,14 +17,14 @@ public class PomodoroTest {
     
     @Test
     public void notEqualWhenDifferentId() {
-        Pomodoro p1 = new Pomodoro(1, null, null, null);
-        Pomodoro p2 = new Pomodoro(1, null, null, null);
+        Pomodoro p1 = new Pomodoro(1, 1 , 1, null, null);
+        Pomodoro p2 = new Pomodoro(1, 1 , 1, null, null);
         assertFalse(p1.equals(p2));
     }   
     
     @Test
     public void nonEqualWhenDifferentType() {
-        Pomodoro p = new Pomodoro(1, null, null, null);
+        Pomodoro p = new Pomodoro(1, 1 , 1, null,null);
         Object o = new Object();
         assertFalse(p.equals(o));
     }      

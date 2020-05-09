@@ -6,7 +6,11 @@
 package pomodoroapp.ui;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import pomodoroapp.domain.PomodoroService;
 import javafx.application.Application;
@@ -14,6 +18,8 @@ import static javafx.application.Application.launch;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -27,9 +33,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import pomodoroapp.dao.FilePomodoroDao;
 import pomodoroapp.dao.FileUserDao;
+import pomodoroapp.domain.Pomodoro;
 
 /**
  *
@@ -54,12 +63,12 @@ public class PomodoroUi extends Application {
         properties.load(new FileInputStream("config.properties"));
         
         String userFile = properties.getProperty("userFile");
-        String pomodoroFile = properties.getProperty("doneFile");
+        String pomodoroFile = properties.getProperty("pomodoroFile");
             
         FileUserDao userDao = new FileUserDao(userFile);
         FilePomodoroDao pomodoroDao = new FilePomodoroDao(pomodoroFile, userDao);
         pomodoroService = new PomodoroService(pomodoroDao, userDao);
-    }
+    }         
     
     @Override
     public void start(Stage primaryStage) {
@@ -70,6 +79,7 @@ public class PomodoroUi extends Application {
         loginPane.setPadding(new Insets(10));
         Label loginLabel = new Label("username");
         TextField usernameInput = new TextField();
+        Label pomodoroCount = new Label();
         
         inputPane.getChildren().addAll(loginLabel, usernameInput);
         Label loginMessage = new Label();
@@ -81,7 +91,10 @@ public class PomodoroUi extends Application {
             menuLabel.setText(username + " logged in...");
             if ( pomodoroService.login(username) ){
                 loginMessage.setText("");
-                primaryStage.setScene(pomodoroScene);  
+                primaryStage.setScene(pomodoroScene); 
+                
+                String countAsString = String.valueOf(pomodoroService.getPomodoroCount());
+                pomodoroCount.setText("Round " + countAsString);
                 usernameInput.setText("");
             } else {
                 loginMessage.setText("use does not exist");
@@ -159,26 +172,37 @@ public class PomodoroUi extends Application {
             primaryStage.setScene(loginScene);
         });  
         
-        Integer STARTTIME = 15;
-        Timeline timeline = new Timeline();
         Label timerLabel = new Label();
-        IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
-        
+        Pomodoro pomodoro = new Pomodoro(0, pomodoroService.getLoggedUser());
+        pomodoro.setStartTime(10);
         
         Button startButton = new Button("Start timer");
         startButton.setOnAction(e-> {
-          pomodoroService.createPomodoro(STARTTIME,timeline, timerLabel, timeSeconds);
+            pomodoro.setUser(pomodoroService.getLoggedUser());
+            Timeline timeLine = new Timeline();
+            timeLine.getKeyFrames().add(
+                  new KeyFrame(Duration.seconds(pomodoro.getStartTime()),
+                  new KeyValue(pomodoro.getTimeSeconds(), 0)));
+          timeLine.playFromStart();
+          timeLine.setOnFinished(eh -> { 
+              alert("It's time for a break", "You completed your pomodoro!");
+              pomodoro.addCount();
+              pomodoroService.completePomodoro(pomodoro);  
+                  });
+          
         });
-       
         
         HBox createForm = new HBox(10);   
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        createForm.getChildren().addAll(spacer, timerLabel, startButton);
         
-        timerLabel.textProperty().bind(timeSeconds.asString());
+        createForm.getChildren().addAll(pomodoroCount, spacer, timerLabel, startButton);
+        
+        timerLabel.textProperty().bind(pomodoro.getTimeSeconds().asString());
         timerLabel.setTextFill(Color.RED);
         timerLabel.setStyle("-fx-font-size: 4em;");
+        
+   
 
         pomodoroNodes = new VBox(10);
         pomodoroNodes.setMaxWidth(280);
@@ -200,6 +224,28 @@ public class PomodoroUi extends Application {
             
         });
     }
+    
+    public void alert(String title, String message) {
+        Stage window = new Stage();
+
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(title);
+        window.setMinWidth(250);
+
+        Label label = new Label();
+        label.setText(message);
+        Button closeButton = new Button("Close this window");
+        closeButton.setOnAction(e -> window.close());
+
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(label, closeButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.show();
+    }
+    
     @Override
     public void stop() {
       System.out.println("App is closing");
