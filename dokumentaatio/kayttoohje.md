@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto [pomodoroapp.jar](https://github.com/Aleksipa/ot-harjoitustyo/releases)
+Lataa tiedosto [pomodoroApp.jar](https://github.com/Aleksipa/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ## Konfigurointi
 
@@ -16,7 +16,7 @@ doneFile=done.txt
 Ohjelma käynnistetään komennolla 
 
 ```
-java -jar pomodoroapp.jar
+java -jar pomodoroApp.jar
 ```
 
 ## Kirjautuminen
@@ -25,7 +25,7 @@ Sovellus käynnistyy kirjautumisnäkymään, jonne syötetään olemassaoleva k�
 
 ## Uuden käyttäjän luominen
 
-Kirjautumisnäkymästä on voi siirtyä uuden käyttäjän luomisnäkymään panikkeella _create new user_.
+Kirjautumisnäkymästä voi siirtyä uuden käyttäjän luomisnäkymään panikkeella _create new user_.
 
 Uusi käyttäjä luodaan syöttämällä tiedot syötekenttiin ja painamalla _create_ Jos käyttäjän luominen onnistuu, palataan kirjautumisnäkymään.
 
@@ -33,6 +33,22 @@ Uusi käyttäjä luodaan syöttämällä tiedot syötekenttiin ja painamalla _cr
 
 Onnistuneen kirjautumisen myötä siirrytään näkymään, jossa käyttäjä näkee suorittamansa työskentelyjaksot ja jossa käyttäjä voi käynnistää uuden työskentelyjakson painikkeella _start_.
 
-Painamalla _pause_ painiketta käyttäjä voi pysäyttää työskentelyjakson. Sitten kun käyttäjä on taas valmis jatkamaan työskentelyjaksoa, sen saa päälle painamalla _start_ painiketta.
+Painamalla _pause_ painiketta käyttäjä voi pysäyttää työskentelyjakson. Sitten kun käyttäjä on taas valmis jatkamaan työskentelyjaksoa, ajastimen saa päälle painamalla uudestaan _start_ painiketta.
 
-Klikkaamalla näkymän oikean ylänurkan painiketta _logout_ käyttäjä kirjautuu ulos sovelluksesta ja sovellus palaa takaisin kirjaantumisnäkymään.
+## Uloskirjautuminen ja ohjelman sammuttaminen käytön jälkeen
+
+Klikkaamalla näkymän oikean ylänurkan painiketta _logout_ käyttäjä kirjautuu ulos sovelluksesta. Jos olet suorittanut pomodoron ajastimen loppuun ennen kuin kirjauduit ulos, voi seuraava käyttäjä kirjautua nyt sisään. Jos kuitenkin jätit pomodoron kesken, tulee sovellus sammuttaa ennen kuin seuraava käyttäjä voi kirjautua sisään.
+
+## Ajastimen pituuden muuttaminen
+
+Ajastimen kestoa voi lyhentää tai pidentää muokkaamalla pomodoroapp.ui kansiossa olevan PomodoroUi.java tiedoston riviä 248 sisältöä. Tällä hetkellä ajastin on säädetty 25 minuutin pituiseksi.
+
+```
+pomodoro.setTime(LocalTime.of(0, 25));
+```
+
+Tämän lisäksi tulee samassa tiedostossa rivillä 57 oleva timeToDisplay arvo muokata vastaamaan haluttua aikaa. 
+
+```
+private static String timeToDisplay = "25:00";
+```
