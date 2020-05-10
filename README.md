@@ -1,13 +1,14 @@
 # PomodoroApp
 
-Sovelluksen avulla käyttäjien on mahdollista jaksottaa omaa työskentelyään haluamansa pituisiin jaksoihin ja seurata miten monta esim. 30 minuutin työskentelyjaksoa käyttäjä on suorittanut. Sovellusta on mahdollista käyttää useamman rekisteröityneen käyttäjän, joilla kaikilla on oma yksilöllinen suorituslistansa.
+Sovelluksen avulla käyttäjien on mahdollista jaksottaa omaa työskentelyään 25 minuutin jaksoihin. Ohjelma pitää kirjaa siitä, miten monta työskentelyjaksoa käyttäjä on suorittanut. Sovellusta on mahdollista käyttää useamman rekisteröityneen käyttäjän, joilla kaikilla on oma yksilöllinen suorituslistansa.
 
 ## Dokumentaatio
 
-[vaatimusmäärittely](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+[Käyttöohje](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
 
+[Vaatimusmäärittely](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
-[työaikakirjanpito](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+[Työaikakirjanpito](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 [Arkkitehtuurikuvaus](https://github.com/Aleksipa/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 

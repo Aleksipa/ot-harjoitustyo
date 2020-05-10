@@ -2,15 +2,15 @@
 
 ## Sovelluksen tarkoitus
 
-Sovelluksen avulla käyttäjien on mahdollista jaksottaa omaa työskentelyään haluamansa pituisiin jaksoihin ja seurata miten monta esim. 30 minuutin työskentelyjaksoa käyttäjä on suorittanut. Sovellusta on mahdollista käyttää useamman rekisteröityneen käyttäjän, joilla kaikilla on oma yksilöllinen lista siitä miten monta työskentelyjaksoa kukin käyttäjä on suorittanut.
+Sovelluksen avulla käyttäjien on mahdollista jaksottaa omaa työskentelyään 25 minuutin pituisiin jaksoihin ja seurata miten monta työskentelyjaksoa käyttäjä on suorittanut. Sovellusta on mahdollista käyttää useamman rekisteröityneen käyttäjän, joilla kaikilla on oma yksilöllinen lista siitä miten monta työskentelyjaksoa kukin käyttäjä on suorittanut.
 
-## Käyttäjät / tehty
+## Käyttäjät
 
-Alkuvaiheessa sovelluksella on ainoastaan yksi käyttäjärooli eli normaali käyttäjä. Myöhemmin sovellukseen saatetaan lisätä suuremmilla oikeuksilla varustettu pääkäyttäjä.
+Alkuvaiheessa sovelluksella on ainoastaan yksi käyttäjärooli eli normaali käyttäjä.
 
 ## Perusversion tarjoama toiminnallisuus
 
-### Ennen kirjautumista / tehty
+### Ennen kirjautumista
 
 * käyttäjä voi luoda järjestelmään käyttäjätunnuksen. Käyttäjätunnuksen täytyy olla uniikki ja pituudeltaan vähintään 5 merkkiä. 
 
@@ -20,14 +20,15 @@ Alkuvaiheessa sovelluksella on ainoastaan yksi käyttäjärooli eli normaali kä
 
 * Käyttäjä näkee suorittamansa työskentelyjaksot
 
-* Käyttäjä voi muokata yhden työskentelyjakson kestoa ja käynnistää ajastimen / osittain tehty
+* Käyttäjä voi käynnistää työskentelyjakson, jolloin ajastin käynnistyy ja näyttää miten paljon työskentelyjaksoa on jäljellä. Työskentelyjakson päätyttyä järjestelmä hälyttää, jolloin käyttäjä tietää työskentelyjakson päättyneen.
 
-* Käyttäjä voi käynnistää työskentelyjakson, jolloin ajastin käynnistyy ja näyttää miten paljon työskentelyjaksoa on jäljellä. Työskentelyjakson päätyttyä järjestelmä hälyttää, jolloin käyttäjä tietää työskentelyjakson päättyneen. / tehty
+* Käyttäjä voi pysäyttää työskentelyjakson painamalla "pause" -näppäintä ja käynnistää jakson uudestaan painamalla "start" -näppäintä.
 
-* Käyttäjä voi kirjautua ulos järjestelmästä / tehty
+* Käyttäjä voi kirjautua ulos järjestelmästä
 
 ### Jatkokehitysideoita
 
 * Päivä-, viikko- ja kuukausikohtainen raportti käyttäjän suorittamista työskentelyjaksoista
 * Käyttäjien yhteyteen salasana, joka vaaditaan kirjautuessa
 * Käyttäjätunnuksen ja siihen liittyvien tietojen poisto
+* Työskentelyjakson pituuden säätäminen
