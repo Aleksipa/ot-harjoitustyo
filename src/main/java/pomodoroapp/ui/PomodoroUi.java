@@ -52,11 +52,11 @@ public class PomodoroUi extends Application {
     private Scene newUserScene;
     private Scene loginScene;
     
-    private VBox pomodoroNodes;
     private Label menuLabel = new Label();
     
     private Timeline timeLine;
-    public static StringProperty displayTime = new SimpleStringProperty("1:00");
+    private static String timeToDisplay = "25:00";
+    public static StringProperty displayTime = new SimpleStringProperty(timeToDisplay);
     public static IntegerProperty roundsCompleted = new SimpleIntegerProperty(0);
     
     @Override
@@ -113,9 +113,9 @@ public class PomodoroUi extends Application {
         
         loginPane.getChildren().addAll(loginMessage, inputPane, loginButton, createButton);       
         
-        loginScene = new Scene(loginPane, 300, 250);    
+        loginScene = new Scene(loginPane, 370, 250);    
    
-        // new createNewUserScene
+        // createNewUserScene
         
         VBox newUserPane = new VBox(10);
         
@@ -142,7 +142,7 @@ public class PomodoroUi extends Application {
             String username = newUsernameInput.getText();
             String name = newNameInput.getText();
    
-            if ( username.length()==2 || name.length()<2 ) {
+            if ( username.length()==2 || name.length()<5 ) {
                 userCreationMessage.setText("username or name too short");
                 userCreationMessage.setTextFill(Color.RED);              
             } else if ( pomodoroService.createUser(username, name) ){
@@ -154,17 +154,16 @@ public class PomodoroUi extends Application {
                 userCreationMessage.setText("username has to be unique");
                 userCreationMessage.setTextFill(Color.RED);        
             }
- 
         });  
         
         newUserPane.getChildren().addAll(userCreationMessage, newUsernamePane, newNamePane, createNewUserButton); 
        
-        newUserScene = new Scene(newUserPane, 350, 250);
+        newUserScene = new Scene(newUserPane, 370, 250);
         
         // main scene
                
         BorderPane mainPane = new BorderPane();
-        pomodoroScene = new Scene(mainPane, 350, 250);
+        pomodoroScene = new Scene(mainPane, 370, 250);
         
         HBox menuPane = new HBox(10);    
         Region menuSpacer = new Region();
@@ -225,10 +224,6 @@ public class PomodoroUi extends Application {
         
         pomodoroCountText.setStyle("-fx-font-size: 1.3em;");
         pomodoroCount.setStyle("-fx-font-size: 1.3em;");
-
-        pomodoroNodes = new VBox(10);
-        pomodoroNodes.setMaxWidth(280);
-        pomodoroNodes.setMinWidth(280);
         
         mainPane.setBottom(createForm);
         mainPane.setTop(menuPane);
@@ -248,33 +243,33 @@ public class PomodoroUi extends Application {
     }
     
     private void startTimer() {
-    Pomodoro pomodoro = new Pomodoro(0, pomodoroService.getLoggedUser());
-    pomodoro.setUser(pomodoroService.getLoggedUser());
-    pomodoro.setTime(LocalTime.of(0, 1));
-    displayTime.set(pomodoro.getTime().format(DateTimeFormatter.ofPattern("mm:ss")));
-    timeLine = new Timeline();
-    timeLine.setCycleCount(pomodoro.getTimeInSeconds());
-    timeLine.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-        public void handle(ActionEvent event) {
-            pomodoro.setTime(pomodoro.getTime().minusSeconds(1));
-            displayTime.set(pomodoro.getTime().format(DateTimeFormatter.ofPattern("mm:ss")));                                
-            if ("00:00".equals(pomodoro.getTime().format(DateTimeFormatter.ofPattern("mm:ss")))){
-                alert("It's time for a break", "You completed your pomodoro!");
-                pomodoro.addCount();
-                pomodoroService.completePomodoro(pomodoro);
-                roundsCompleted.setValue(pomodoroService.getPomodoroCount());
-                resetTimer(pomodoro);
+        Pomodoro pomodoro = new Pomodoro(0, pomodoroService.getLoggedUser());
+        pomodoro.setUser(pomodoroService.getLoggedUser());
+        pomodoro.setTime(LocalTime.of(0, 25));
+        displayTime.set(pomodoro.getTime().format(DateTimeFormatter.ofPattern("mm:ss")));
+        timeLine = new Timeline();
+        timeLine.setCycleCount(pomodoro.getTimeInSeconds());
+        timeLine.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                pomodoro.setTime(pomodoro.getTime().minusSeconds(1));
+                displayTime.set(pomodoro.getTime().format(DateTimeFormatter.ofPattern("mm:ss")));                                
+                if ("00:00".equals(pomodoro.getTime().format(DateTimeFormatter.ofPattern("mm:ss")))){
+                    alert("It's time for a break", "You completed your pomodoro!");
+                    pomodoro.addCount();
+                    pomodoroService.completePomodoro(pomodoro);
+                    roundsCompleted.setValue(pomodoroService.getPomodoroCount());
+                    resetTimer(pomodoro);
+                }
             }
-        }
-    }));
-    timeLine.playFromStart();
+        }));
+        timeLine.playFromStart();
     }
     
     public void resetTimer(Pomodoro pomodoro) {
         if (timeLine != null) {
             timeLine.stop();
         }
-        displayTime.set("10:00");
+        displayTime.set(timeToDisplay);
         pomodoro.initializeTime();
     }
     
@@ -295,7 +290,7 @@ public class PomodoroUi extends Application {
         
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
-        window.setMinWidth(250);
+        window.setMinWidth(350);
 
         Label label = new Label();
         label.setText(message);

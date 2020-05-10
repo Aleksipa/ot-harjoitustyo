@@ -19,7 +19,7 @@ public class Pomodoro {
     
     private int id;
     private int count;
-    private int startTime = 1;
+    private int startTime = 25;
     private User user;
     private LocalTime time;
     public static IntegerProperty timeSeconds = new SimpleIntegerProperty();

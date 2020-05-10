@@ -16,7 +16,7 @@ Sovelluksen avulla käyttäjien on mahdollista jaksottaa omaa työskentelyään 
 
 ## Releaset
 
-[Viikko 5](https://github.com/Aleksipa/ot-harjoitustyo/releases)
+[Loppupalautus](https://github.com/Aleksipa/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ## Komentorivitoiminnot
 
