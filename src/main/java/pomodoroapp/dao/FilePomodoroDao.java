@@ -1,11 +1,5 @@
 package pomodoroapp.dao;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author aleksipaavola
@@ -42,10 +36,10 @@ public class FilePomodoroDao implements PomodoroDao {
         }
     }
     
-    private void save() throws Exception{
+    private void save() throws Exception {
         try (FileWriter writer = new FileWriter(new File(file))) {
             for (Pomodoro pomodoro : pomodoros) {
-                    writer.write(pomodoro.getCount() + ";" + pomodoro.getUser().getUsername() + "\n");
+                writer.write(pomodoro.getCount() + ";" + pomodoro.getUser().getUsername() + "\n");
             }
         }
     }
@@ -63,21 +57,21 @@ public class FilePomodoroDao implements PomodoroDao {
     public Pomodoro createOrUpdate(Pomodoro pomodoro) throws Exception {
         newPomodoros = new ArrayList<>();
         boolean found = false;
-        if (pomodoros.isEmpty()){
+        if (pomodoros.isEmpty()) {
             pomodoros.add(pomodoro);
         } else {
             for (Pomodoro p : pomodoros) {
-                if (p.getUser().getUsername() == pomodoro.getUser().getUsername()){
-                    p.setCount(p.getCount()+1);
+                if (p.getUser().getUsername() == pomodoro.getUser().getUsername()) {
+                    p.setCount(p.getCount() + 1);
                     found = true;
                 } 
             }
-            if (found == false)
-                    newPomodoros.add(pomodoro);
-                }
+            if (found == false) {
+                newPomodoros.add(pomodoro);
+            }
+        }
         pomodoros.addAll(newPomodoros);
         save();
         return pomodoro;
-    }  
-    
+    }   
 }

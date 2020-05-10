@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pomodoroapp.domain;
 
 import java.util.ArrayList;
@@ -59,11 +54,11 @@ public class PomodoroService {
             .filter(p-> p.getUser().equals(loggedIn))
             .collect(Collectors.toList());
         
-        if (result.isEmpty())
+        if (result.isEmpty()) {
             return 0;       
-        else
+        } else {
             return result.get(0).getCount();
-            
+        }
     }
     
     /**

@@ -37,15 +37,20 @@ public class PomodoroServicePomodoroTest {
     public void pomodoroCountZeroIfNotLoggedIn() {
         pomodoroService.logout();
         int pomodoros = pomodoroService.getPomodoroCount();
-        
         assertEquals(0, pomodoros);
     }  
     
     @Test
-    public void loggedUsersCompletedPomodorosAddCount() {
+    public void loggedUsersCompletedPomodorosGetCount() {
         pomodoroService.login("testaaja1");
         int pomodoros = pomodoroService.getPomodoroCount();
-        
         assertEquals(1, pomodoros);
-    }   
+    }
+    @Test
+    public void loggedUsersCompletedPomodorosAddCount() {
+        pomodoroService.login("testaaja2");
+        pomodoroService.completePomodoro(new Pomodoro(1,new User("testaaja2","")));
+        int pomodoros = pomodoroService.getPomodoroCount();
+        assertEquals(1, pomodoros);
+    }
 }

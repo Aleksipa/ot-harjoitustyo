@@ -1,5 +1,6 @@
 package pomodoroapp.domain;
 
+import java.time.LocalTime;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -28,6 +29,20 @@ public class PomodoroTest {
         Pomodoro p = new Pomodoro(1, 1, 1, null,null);
         Object o = new Object();
         assertFalse(p.equals(o));
-    }      
+    }   
+    @Test
+    public void nonEqualWhenDifferentTime() {
+        Pomodoro p1 = new Pomodoro(1, 1, 1, null, null);
+        Pomodoro p2 = new Pomodoro(1, 1, 1, null, null);
+        p1.setTime(LocalTime.of(0, 2));
+        assertFalse(p1.equals(p2));
+    }
+    @Test
+    public void nonEqualWhenDifferentCount() {
+        Pomodoro p1 = new Pomodoro(1, 1, 1, null, null);
+        Pomodoro p2 = new Pomodoro(1, 1, 1, null, null);
+        p1.addCount();
+        assertFalse(p1.equals(p2));
+    }
 }
    

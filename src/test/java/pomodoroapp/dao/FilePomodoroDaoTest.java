@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,7 +53,19 @@ public class FilePomodoroDaoTest {
         assertEquals(1, pomodoro.getCount());
         assertEquals("testaaja", pomodoro.getUser().getUsername());
     }  
-        @After
+    
+    @Test
+    public void pomodorosCanBeCreated() throws Exception {    
+        dao.createOrUpdate(new Pomodoro(1, new User("toinentestaaja", "")));
+        
+        List<Pomodoro> pomodoros = dao.getAll();
+        assertEquals(2, pomodoros.size());
+        Pomodoro pomodoro = pomodoros.get(1);
+        assertEquals(1, pomodoro.getCount());
+        assertEquals("toinentestaaja", pomodoro.getUser().getUsername());
+    }     
+    
+    @After
     public void tearDown() {
         userFile.delete();
     }
