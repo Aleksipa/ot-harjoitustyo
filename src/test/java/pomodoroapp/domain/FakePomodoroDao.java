@@ -15,15 +15,22 @@ import pomodoroapp.dao.PomodoroDao;
  * @author aleksipaavola
  */
 public class FakePomodoroDao implements PomodoroDao{
+    List<Pomodoro> pomodoros;
+    
+    public FakePomodoroDao() {
+        pomodoros = new ArrayList<>();
+    }  
     
     @Override
     public Pomodoro createOrUpdate(Pomodoro pomodoro) {
+        pomodoro.setCount(1);
+        pomodoros.add(pomodoro);
         return pomodoro;
     }
 
     @Override
     public List<Pomodoro> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return pomodoros;
     }
  
 

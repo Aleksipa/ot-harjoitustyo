@@ -6,26 +6,26 @@
 package pomodoroapp.ui;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
+import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import pomodoroapp.domain.PomodoroService;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -55,6 +55,10 @@ public class PomodoroUi extends Application {
     private VBox pomodoroNodes;
     private Label menuLabel = new Label();
     
+    private Timeline timeLine;
+    public static StringProperty displayTime = new SimpleStringProperty("1:00");
+    public static IntegerProperty roundsCompleted = new SimpleIntegerProperty(0);
+    
     @Override
     public void init() throws Exception {
         
@@ -80,6 +84,7 @@ public class PomodoroUi extends Application {
         Label loginLabel = new Label("username");
         TextField usernameInput = new TextField();
         Label pomodoroCount = new Label();
+        Label pomodoroCountText = new Label();
         
         inputPane.getChildren().addAll(loginLabel, usernameInput);
         Label loginMessage = new Label();
@@ -92,12 +97,11 @@ public class PomodoroUi extends Application {
             if ( pomodoroService.login(username) ){
                 loginMessage.setText("");
                 primaryStage.setScene(pomodoroScene); 
-                
-                String countAsString = String.valueOf(pomodoroService.getPomodoroCount());
-                pomodoroCount.setText("Round " + countAsString);
+                roundsCompleted.setValue(pomodoroService.getPomodoroCount());
+                pomodoroCount.textProperty().bind(roundsCompleted.asString());
                 usernameInput.setText("");
             } else {
-                loginMessage.setText("use does not exist");
+                loginMessage.setText("user does not exist");
                 loginMessage.setTextFill(Color.RED);
             }      
         });  
@@ -155,12 +159,12 @@ public class PomodoroUi extends Application {
         
         newUserPane.getChildren().addAll(userCreationMessage, newUsernamePane, newNamePane, createNewUserButton); 
        
-        newUserScene = new Scene(newUserPane, 300, 250);
+        newUserScene = new Scene(newUserPane, 350, 250);
         
         // main scene
                
         BorderPane mainPane = new BorderPane();
-        pomodoroScene = new Scene(mainPane, 300, 250);
+        pomodoroScene = new Scene(mainPane, 350, 250);
         
         HBox menuPane = new HBox(10);    
         Region menuSpacer = new Region();
@@ -170,39 +174,57 @@ public class PomodoroUi extends Application {
         logoutButton.setOnAction(e->{
             pomodoroService.logout();
             primaryStage.setScene(loginScene);
-        });  
+        });
         
         Label timerLabel = new Label();
-        Pomodoro pomodoro = new Pomodoro(0, pomodoroService.getLoggedUser());
-        pomodoro.setStartTime(10);
         
+        // Start pomodoro timer
         Button startButton = new Button("Start timer");
         startButton.setOnAction(e-> {
-            pomodoro.setUser(pomodoroService.getLoggedUser());
-            Timeline timeLine = new Timeline();
-            timeLine.getKeyFrames().add(
-                  new KeyFrame(Duration.seconds(pomodoro.getStartTime()),
-                  new KeyValue(pomodoro.getTimeSeconds(), 0)));
-          timeLine.playFromStart();
-          timeLine.setOnFinished(eh -> { 
-              alert("It's time for a break", "You completed your pomodoro!");
-              pomodoro.addCount();
-              pomodoroService.completePomodoro(pomodoro);  
-                  });
-          
+            if (timeLine == null || timeLine.getStatus().equals(Status.STOPPED)) {
+                startTimer();
+            } else {
+                switch (timeLine.getStatus()) {
+                    case PAUSED:
+                        continueTimer();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        
+        // Pause pomodoro timer
+        Button pauseButton = new Button("Pause timer");
+        pauseButton.setOnAction(e-> {
+            if ((timeLine == null || timeLine.getStatus().equals(Status.STOPPED))) {
+                startTimer();
+            } else {
+                switch (timeLine.getStatus()) {
+                    case PAUSED:
+                        continueTimer();
+                        break;
+                    default:
+                        pauseTimer();
+                        break;
+                }
+            }
         });
         
         HBox createForm = new HBox(10);   
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         
-        createForm.getChildren().addAll(pomodoroCount, spacer, timerLabel, startButton);
+        pomodoroCountText.setText("Rounds completed:");
         
-        timerLabel.textProperty().bind(pomodoro.getTimeSeconds().asString());
+        createForm.getChildren().addAll(pomodoroCountText, pomodoroCount, spacer, timerLabel, pauseButton, startButton);
+        
+        timerLabel.textProperty().bind(displayTime);
         timerLabel.setTextFill(Color.RED);
         timerLabel.setStyle("-fx-font-size: 4em;");
         
-   
+        pomodoroCountText.setStyle("-fx-font-size: 1.3em;");
+        pomodoroCount.setStyle("-fx-font-size: 1.3em;");
 
         pomodoroNodes = new VBox(10);
         pomodoroNodes.setMaxWidth(280);
@@ -225,9 +247,52 @@ public class PomodoroUi extends Application {
         });
     }
     
+    private void startTimer() {
+    Pomodoro pomodoro = new Pomodoro(0, pomodoroService.getLoggedUser());
+    pomodoro.setUser(pomodoroService.getLoggedUser());
+    pomodoro.setTime(LocalTime.of(0, 1));
+    displayTime.set(pomodoro.getTime().format(DateTimeFormatter.ofPattern("mm:ss")));
+    timeLine = new Timeline();
+    timeLine.setCycleCount(pomodoro.getTimeInSeconds());
+    timeLine.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        public void handle(ActionEvent event) {
+            pomodoro.setTime(pomodoro.getTime().minusSeconds(1));
+            displayTime.set(pomodoro.getTime().format(DateTimeFormatter.ofPattern("mm:ss")));                                
+            if ("00:00".equals(pomodoro.getTime().format(DateTimeFormatter.ofPattern("mm:ss")))){
+                alert("It's time for a break", "You completed your pomodoro!");
+                pomodoro.addCount();
+                pomodoroService.completePomodoro(pomodoro);
+                roundsCompleted.setValue(pomodoroService.getPomodoroCount());
+                resetTimer(pomodoro);
+            }
+        }
+    }));
+    timeLine.playFromStart();
+    }
+    
+    public void resetTimer(Pomodoro pomodoro) {
+        if (timeLine != null) {
+            timeLine.stop();
+        }
+        displayTime.set("10:00");
+        pomodoro.initializeTime();
+    }
+    
+    public void pauseTimer() {
+        boolean paused = false;
+        if (timeLine != null && timeLine.getStatus().equals(Status.RUNNING)) {
+            timeLine.pause();
+            paused = true;
+        }
+    }
+    
+    public void continueTimer() {
+        timeLine.play();
+    }
+    
     public void alert(String title, String message) {
         Stage window = new Stage();
-
+        
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setMinWidth(250);

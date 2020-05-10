@@ -17,7 +17,7 @@ public class FakeUserDao implements UserDao {
     List<User> users = new ArrayList<>();
 
     public FakeUserDao() {
-        users.add(new User("testertester", "Teppo Testaaja"));
+        users.add(new User("testaaja", "Testi Kayttaja"));
     }
     
     @Override

@@ -19,55 +19,55 @@ public class PomodoroServiceUserTest {
     
     FakePomodoroDao pomodoroDao;
     FakeUserDao userDao;
-    PomodoroService service;
+    PomodoroService pomodoroService;
     
     @Before
     public void setUp() {
         pomodoroDao = new FakePomodoroDao();
         userDao = new FakeUserDao();
-        service = new PomodoroService(pomodoroDao, userDao);     
+        pomodoroService = new PomodoroService(pomodoroDao, userDao);     
     }
     
     @Test
     public void nonExistingUserCanLogIn() {
-        boolean result = service.login("nonexisting");
+        boolean result = pomodoroService.login("eiole");
         assertFalse(result);
         
-        assertEquals(null, service.getLoggedUser());
+        assertEquals(null, pomodoroService.getLoggedUser());
     }    
     
     @Test
     public void existingUserCanLogIn() {
-        boolean result = service.login("testertester");
+        boolean result = pomodoroService.login("testaaja");
         assertTrue(result);
         
-        User loggedIn = service.getLoggedUser();
-        assertEquals("Teppo Testaaja", loggedIn.getName() );
+        User loggedIn = pomodoroService.getLoggedUser();
+        assertEquals("Testi Kayttaja", loggedIn.getName() );
     }
     
     @Test
     public void loggedInUserCanLogout() {
-        service.login("testertester");
-        service.logout();
+        pomodoroService.login("testaaja");
+        pomodoroService.logout();
         
-        assertEquals(null, service.getLoggedUser());
+        assertEquals(null, pomodoroService.getLoggedUser());
     }    
     
     @Test
     public void userCreationFailsIfNameNotUnique() throws Exception {
-        boolean result = service.createUser("testertester", "Teuvo Testaaja");
+        boolean result = pomodoroService.createUser("testaaja", "Testi Kayttaja");
         assertFalse(result);
     }
     
     @Test
     public void succesfullyCreatedUserCanLogIn() throws Exception {
-        boolean result = service.createUser("dijkstra", "Edsger Dijkstra");
+        boolean result = pomodoroService.createUser("eka", "toka");
         assertTrue(result);
         
-        boolean loginOk = service.login("dijkstra");
+        boolean loginOk = pomodoroService.login("eka");
         assertTrue(loginOk);
         
-        User loggedIn = service.getLoggedUser();
-        assertEquals("Edsger Dijkstra", loggedIn.getName() );
+        User loggedIn = pomodoroService.getLoggedUser();
+        assertEquals("toka", loggedIn.getName() );
     } 
 }

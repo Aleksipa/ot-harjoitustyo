@@ -33,7 +33,7 @@ public class FileUserDaoTest {
         userFile = testFolder.newFile("testfile_users.txt");  
         
         try (FileWriter file = new FileWriter(userFile.getAbsolutePath())) {
-            file.write("testertester;Teppo Testaaja\n");
+            file.write("testaaja;Testi Kayttaja\n");
         }
         
         dao = new FileUserDao(userFile.getAbsolutePath());
@@ -44,31 +44,31 @@ public class FileUserDaoTest {
         List<User> users = dao.getAll();
         assertEquals(1, users.size());
         User user = users.get(0);
-        assertEquals("Teppo Testaaja", user.getName());
-        assertEquals("testertester", user.getUsername());
+        assertEquals("Testi Kayttaja", user.getName());
+        assertEquals("testaaja", user.getUsername());
     }
     
     @Test
     public void existingUserIsFound() {
-        User user = dao.findByUsername("testertester");
-        assertEquals("Teppo Testaaja", user.getName());
-        assertEquals("testertester", user.getUsername());
+        User user = dao.findByUsername("testaaja");
+        assertEquals("Testi Kayttaja", user.getName());
+        assertEquals("testaaja", user.getUsername());
     }
     
     @Test
     public void nonExistingUserIsFound() {
-        User user = dao.findByUsername("hellas");
+        User user = dao.findByUsername("eiole");
         assertEquals(null, user);
     }
   
     @Test
     public void savedUserIsFound() throws Exception {
-        User nawUser = new User("hellas", "Arto Hellas");
+        User nawUser = new User("aleksi", "aleksi testi");
         dao.create(nawUser);
         
-        User user = dao.findByUsername("hellas");
-        assertEquals("Arto Hellas", user.getName());
-        assertEquals("hellas", user.getUsername());
+        User user = dao.findByUsername("aleksi");
+        assertEquals("aleksi testi", user.getName());
+        assertEquals("aleksi", user.getUsername());
     }
     
     @After
